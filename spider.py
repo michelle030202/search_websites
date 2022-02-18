@@ -1,6 +1,11 @@
 from urllib.request import urlopen
-from link finder import linkFinder
+from link_finder import LinkFinder
 from general import *
+
+# to solve SSL: CERTIFICATE_VERIFY_FAILED
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
+
 
 class Spider:
     # class variable (shared among all instance)
@@ -22,7 +27,7 @@ class Spider:
         self.crawl_page('First spider', Spider.base_url)
 
     @staticmethod
-    def boot(self):
+    def boot():
         create_project_directory(Spider.project_name)
         create_data_files(Spider.project_name, Spider.base_url)
         Spider.queue = file_to_set(Spider.queue_file)
@@ -33,6 +38,52 @@ class Spider:
         if page_url not in Spider.crawled:
             print(thread_name + ' now crawling ' + page_url)
             print(' Queue ' + str(len(Spider.queue)) + '| crawled ' + str(len(Spider.crawled)))
+            Spider.add_links_to_queue(Spider.gather_links(page_url))
+            Spider.queue.remove(page_url)
+            Spider.crawled.add(page_url)
+            Spider.update_files()
+            #Spider.get_title(page_url)
+
+#    @staticmethod
+#   def get_title(page_url):
+
+    @staticmethod
+    def gather_links(page_url):
+        html_string = ''
+        try:
+            response = urlopen(page_url)
+            #if response.getheader('Content-Type') == 'text/html':
+            html_bytes = response.read()
+            html_string = html_bytes.decode('utf-8')
+
+            finder = LinkFinder(Spider.base_url, page_url)
+            finder.feed(html_string)
+        except:
+            print('Error: can not crawl page')
+            return set()
+        return finder.page_links()
+
+    @staticmethod
+    def add_links_to_queue(links):
+        for url in links:
+            if url in Spider.queue:
+                continue
+            if url in Spider.crawled:
+                continue
+            if Spider.domain_name not in url:
+                continue
+            Spider.queue.add(url)
+            print("added url: ", url)
+
+    @staticmethod
+    def update_files():
+        set_to_file(Spider.queue, Spider.queue_file)
+        set_to_file(Spider.crawled, Spider.crawled_file)
+
+
+
+
+
 
 
 

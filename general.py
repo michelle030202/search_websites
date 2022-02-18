@@ -44,5 +44,5 @@ def file_to_set(file_name):
 def set_to_file(links, file):
     delete_file_contents(file)
     for link in sorted(links):
-        append_to_file(file, links)
+        append_to_file(file, link)
 
