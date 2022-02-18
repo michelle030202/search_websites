@@ -19,5 +19,3 @@ class LinkFinder:
                     page_links.append(link['href'])
                     print("added link ", link['href'])
         return page_links
-
-
