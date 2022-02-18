@@ -56,12 +56,15 @@ class Spider:
             html_bytes = response.read()
             html_string = html_bytes.decode('utf-8')
 
+            #base_url = walla.co.il, page_url = walla.co.il/1000
             finder = LinkFinder(Spider.base_url, page_url)
-            finder.feed(html_string)
+            page_links = finder.get_all_links_that_start_with_base_url()
+            print(page_links)
+            #finder.feed(html_string)
         except:
             print('Error: can not crawl page')
             return set()
-        return finder.page_links()
+        return page_links
 
     @staticmethod
     def add_links_to_queue(links):
