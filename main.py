@@ -4,7 +4,7 @@ from spider import Spider
 from domain import *
 from general import *
 
-PROJECT_NAME = 'the_guardian'
+PROJECT_NAME = 'News'
 HOMEPAGE = 'https://news.walla.co.il/'
 DOMAIN_NAME = get_domain_name(HOMEPAGE)
 QUEUE_FILE = PROJECT_NAME + '/queue.txt'
@@ -37,7 +37,7 @@ def create_jobs():
 def crawl():
     queued_links= file_to_set(QUEUE_FILE)
     if len(queued_links) > 0:
-        print(str(len(queued_links)) + 'links in the queue')
+        print(str(len(queued_links)) + ' links in the queue')
         create_jobs()
 
 
