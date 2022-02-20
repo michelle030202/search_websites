@@ -1,17 +1,17 @@
 import os
 
-
+# creating directory to store links to crawl and crawled
 def create_project_directory(directory):
         if not os.path.exists(directory):
             print("Creating directory" + directory)
             os.makedirs(directory)
 
-# create queue and crawled files
+# create urls_to_crawl and crawled files
 def create_data_files(project_name, base_url):
-    queue = project_name + '/queue.txt'
+    urls_to_crawl = project_name + '/urls_to_crawl.txt'
     crawled = project_name + '/crawled.txt'
-    if not os.path.isfile(queue):
-        write_file(queue, base_url)
+    if not os.path.isfile(urls_to_crawl):
+        write_file(urls_to_crawl, base_url)
     if not os.path.isfile(crawled):
         write_file(crawled, '')
 

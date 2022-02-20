@@ -6,6 +6,7 @@ class LinkFinder:
         self.base_url = base_url
         self.page_url = page_url
 
+    #
     def get_all_links_that_start_with_base_url(self):
         page_links = []
         parser = 'html.parser'  # or 'lxml' (preferred) or 'html5lib', if installed
