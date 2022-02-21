@@ -1,7 +1,7 @@
 import os
 
 # creating directory to store links to crawl and crawled
-def create_project_directory(directory):
+def create_project_dir(directory):
         if not os.path.exists(directory):
             print("Creating directory" + directory)
             os.makedirs(directory)
@@ -11,12 +11,12 @@ def create_data_files(project_name, base_url):
     urls_to_crawl = project_name + '/urls_to_crawl.txt'
     crawled = project_name + '/crawled.txt'
     if not os.path.isfile(urls_to_crawl):
-        write_file(urls_to_crawl, base_url)
+        create_file(urls_to_crawl, base_url)
     if not os.path.isfile(crawled):
-        write_file(crawled, '')
+        create_file(crawled, '')
 
 # create a new file
-def write_file(path, data):
+def create_file(path, data):
     os.makedirs(os.path.dirname(path), exist_ok=True)
     f = open(path, 'w')
     f.write(data)

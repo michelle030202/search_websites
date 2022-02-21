@@ -9,11 +9,15 @@ class CrawlerDb:
         firebase_admin.initialize_app(self.credentials)
         self.db = firestore.client()
 
+    '''
+    The function gets query, and search this query in
+    the collection of "Links and Titles".
+    '''
     def search_titles(self, query):
         for k in self.db.collection("Links and Titles").get():
             title = k.to_dict().get('Title')
             if query in title:
-                print(title)
+                print("Found title: " + title)
 
     def add_link_and_title(self, page_url,page_title):
         print("add to db")
